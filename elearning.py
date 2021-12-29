@@ -87,15 +87,23 @@ def unFinished_training():
     # 法尊課程(未完訓)
     # chrome.find_element_by_xpath('//*[@id="region-main"]/div/div[3]/button[2]').click()
     time.sleep(4)
-    # 課程名稱第一個
-    chrome.find_element_by_xpath('//*[@id="table"]/tbody/tr[1]/td[2]/a').click()
-    verification_check_user()
 
-
-def verification_check_user():
-    chrome.get(
-        "https://elearning.tii.org.tw/moodle/courserecord/verification_check_user.php?id=40137"
+    # 課程第一個
+    className = wait.until(
+        EC.presence_of_element_located(
+            (By.XPATH, '//*[@id="table"]/tbody/tr[1]/td[2]/a')
+        )
     )
+    # 取出課程網址
+    classNameUrl = className.get_attribute("href")
+    print("點擊的課程網址:" + classNameUrl)
+
+    chrome.find_element_by_xpath('//*[@id="table"]/tbody/tr[1]/td[2]/a').click()
+    verification_check_user(classNameUrl)
+
+
+def verification_check_user(classNameUrl):
+    chrome.get(classNameUrl)
     time.sleep(4)
 
     # 先取得Label文字是什麼
