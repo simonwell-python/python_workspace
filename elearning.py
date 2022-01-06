@@ -150,13 +150,12 @@ def verification_check_user(classNameUrl):
         s1 = Select(q11)
         s1.select_by_visible_text("水裡游的")
 
-    elif q1.text == "選擇生肖:":
-        print("q1:選擇生肖")
+    elif q1.text == "生肖:":
+        print("q1:生肖")
         s1 = Select(q11)
         s1.select_by_visible_text("虎")
 
     ###### 找出q2是屬於哪種問題 ######
-
     if q2.text == "出生日期(yyyy-mm-dd)":
         print("q2:出生日期(yyyy-mm-dd)")
         q22.send_keys("19860913")
@@ -180,8 +179,8 @@ def verification_check_user(classNameUrl):
         s2 = Select(q22)
         s2.select_by_visible_text("水裡游的")
 
-    elif q2.text == "選擇生肖:":
-        print("q2:選擇生肖")
+    elif q2.text == "生肖:":
+        print("q2:生肖")
         s2 = Select(q22)
         s2.select_by_visible_text("虎")
 
