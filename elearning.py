@@ -1,3 +1,5 @@
+# This Python file uses the following encoding: utf-8
+import os, sys
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -9,12 +11,13 @@ import ddddocr
 import time
 import base64
 import requests
+import muggle_ocr
 
 
 options = Options()
 options.add_argument("--disable-notifications")
-
-chrome = webdriver.Chrome("./chromedriver", chrome_options=options)
+chrome_path = r"/usr/local/bin/chromedriver"
+chrome = webdriver.Chrome(executable_path=chrome_path, chrome_options=options)
 wait = WebDriverWait(chrome, 10)  # 等待載入10s
 chrome.get("https://elearning.tii.org.tw/moodle/courserecord/index.php")
 # 找出登入位置
@@ -53,10 +56,14 @@ def login():
 
     file = {"file": open("captcha_img.png", "rb")}  # 下載下來的一般驗證碼(Normal Captcha)圖片
 
-    ocr = ddddocr.DdddOcr()
-    with open("captcha_img.png", "rb") as f:
+    # 初始化；model_type 包含了 ModelType.OCR/ModelType.Captcha 两种
+    # ModelType.Captcha 可识别4-6位验证码
+    sdk = muggle_ocr.SDK(model_type=muggle_ocr.ModelType.Captcha)
+
+    with open(r"captcha_img.png", "rb") as f:
         img_bytes = f.read()
-        res = ocr.classification(img_bytes)
+        # sdk = muggle_ocr.SDK(conf_path="./ocr.yaml")
+        res = sdk.predict(image_bytes=img_bytes)
         print(res)
         # 輸入驗證碼
         input = wait.until(
