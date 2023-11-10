@@ -9,10 +9,17 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 import base64
 import requests
+from fake_useragent import UserAgent
 
 
 options = Options()
 options.add_argument("--disable-notifications")
+
+# user-agent
+# user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
+ua = UserAgent()
+print("user-agent：" + ua.random)
+
 
 chrome = webdriver.Chrome("./chromedriver", chrome_options=options)
 wait = WebDriverWait(chrome, 10)  # 等待載入10s
